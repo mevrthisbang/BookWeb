@@ -1,0 +1,134 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <!-- Configuration for the default package. -->
+    <package name="default" extends="struts-default" namespace="/">
+        <action name="" class="action.LoadAction">
+            <result name="guest">/guest/guestHomePage.jsp</result>
+            <result name="customerTag">/user/userHomePage.jsp</result>
+            <result name="employeeTag">/employee/employeeHomePage.jsp</result>
+            <result name="managerTag">/manager/managerHomePage.jsp</result>
+        </action>
+        <action name="login" class="action.LoginAction">
+            <result name="error">login.jsp</result>
+            <result name="success" type="redirectAction">
+                <param name="actionName">${}</param>
+            </result>
+            <result name="customerCart">/user/userCart.jsp</result>
+        </action>
+        <action name="listBookByCategory" class="action.LoadBookByCategoryAction">
+            <result name="guestTag">/guest/guestHomePage.jsp</result>
+            <result name="customerTag">/user/userHomePage.jsp</result>
+            <result name="employeeTag">/employee/employeeHomePage.jsp</result>
+            <result name="managerTag">/manager/managerHomePage.jsp</result>
+        </action>
+        <action name="searchBook" class="action.SearchBookAction">
+            <result name="guestTag">/guest/guestHomePage.jsp</result>
+            <result name="customerTag">/user/userHomePage.jsp</result>
+            <result name="employeeTag">/employee/employeeHomePage.jsp</result>
+            <result name="managerTag">/manager/managerHomePage.jsp</result>
+        </action>
+        <action name="bookByID" class="action.BookByIDAction">
+            <result name="guestTag">/guest/guestBookDetail.jsp</result>
+            <result name="customerTag">/user/userBookDetail.jsp</result>
+            <result name="employeeTag">/employee/employeeBookFormUpdate.jsp</result>
+            <result name="managerTag">/manager/managerBookFormUpdate.jsp</result>
+        </action>
+        <action name="addToCart" class="action.AddToCartAction">
+            <result name="searchBookPage" type="redirectAction">
+                <param name="actionName">searchBook</param>
+                <param name="search">${search}</param>
+            </result>
+            <result name="bookDetailPage" type="redirectAction">
+                <param name="actionName">bookByID</param>
+                <param name="bookID">${bookID}</param>
+            </result>
+        </action>
+        <action name="loadEmployee" class="action.LoadEmployeeAction">
+            <result name="success">/manager/managerListEmployee.jsp</result>
+        </action>
+        <action name="loadAccountByPrimaryKey" class="action.LoadAccountByPrimaryKeyAction">
+            <result name="customerTag">/user/userManageProfile.jsp</result>
+            <result name="employeeTag">/employee/employeeManageProfile.jsp</result>
+            <result name="managerTag">/manager/managerEmployeeFormUpdate.jsp</result>
+        </action>
+        <action name="updateAccount" class="action.UpdateAccountAction">
+            <result name="success" type="redirectAction">
+                <param name="actionName">loadAccountByPrimaryKey</param>
+                <param name="username">${#session.USER.username}</param>
+                <param name="updateSuccess">${updateSuccess}</param>
+            </result>
+            <result name="customerInvalid">/user/userManageProfile.jsp</result>
+            <result name="customerError">/user/userManageProfile.jsp</result>
+            <result name="employeeInvalid">/employee/employeeManageProfile.jsp</result>
+            <result name="employeeError">/employee/employeeManageProfile.jsp</result>
+        </action>
+        <action name="logout" class="action.LogoutAction">
+            <result name="success">login.jsp</result>
+        </action>
+        <action name="registerAccount" class="action.RegisterAccountAction">
+            <result name="success">login.jsp</result>
+            <result name="invalid">register.jsp</result>
+            <result name="error">register.jsp</result>
+        </action>
+        <action name="disableAccount" class="action.DisableAccountAction">
+            <result name="success" type="redirectAction">
+                <param name="actionName">logout</param>
+            </result>
+            <result name="invalid">
+                confirmForm.jsp
+            </result>
+            <result name="error">
+                confirmForm.jsp
+            </result>
+        </action>
+        <action name="updateBook" class="action.UpdateBookAction">
+            <result name="employeeInvalid">/employee/employeeBookFormUpdate.jsp</result>
+            <result name="employeeError">/employee/employeeBookFormUpdate.jsp</result>
+            <result name="managerInvalid">/manager/managerBookFormUpdate.jsp</result>
+            <result name="managerError">/manager/managerBookFormUpdate.jsp</result>
+            <result name="success" type="redirectAction">
+                <param name="actionName">searchBook</param>
+                <param name="search">${search}</param>
+            </result>
+        </action>
+        <action name="disableBook" class="action.DisableBookAction">
+            <result name="employeeError" type="redirectAction">
+                <param name="actionName">bookByID</param>
+                <param name="bookID">${bookID}</param>
+                <param name="disableError">${disableError}</param>
+            </result>
+            <result name="managerError" type="redirectAction">
+                <param name="actionName">bookByID</param>
+                <param name="bookID">${bookID}</param>
+                <param name="disableError">${disableError}</param>
+            </result>
+            <result name="success" type="redirectAction">
+                <param name="actionName">searchBook</param>
+                <param name="search">${search}</param>
+            </result>
+        </action>
+        <action name="searchBookOrEmployee" class="action.SearchBookOrEmployeeAction">
+            <result name="searchBook">/manager/managerHomePage.jsp</result>
+            <result name="searchEmployee">/manager/managerListEmployee.jsp</result>
+        </action>
+        <action name="updateEmployee" class="action.UpdateEmployeeAction">
+            <result name="success" type="redirectAction">
+                <param name="actionName">loadEmployee</param>
+            </result>
+            <result name="invalid">/manager/managerEmployeeFormUpdate.jsp</result>
+            <result name="error">/manager/managerEmployeeFormUpdate.jsp</result>
+        </action>
+        <action name="disableEmployee" class="action.DisableEmployeeAction">
+            <result name="success" type="redirectAction">
+                <param name="actionName">loadEmployee</param>
+            </result>
+            <result name="error" type="redirectAction">
+                <param name="actionName">loadEmployee</param>
+                <param name="disableError">${disableError}</param>
+            </result>
+        </action>
+    </package>
+</struts>
